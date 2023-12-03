@@ -2,18 +2,11 @@ package com.example.demo.api.model;
 
 public class Prescription {
 
-	private Patient patient;
+	private String pssn;
 	private String medication;
-	private Doctor prescriber;
+	private String dssn;
 	private String date;
 	
-	public Patient getPatient() {
-		return patient;
-	}
-
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
 
 	public String getMedication() {
 		return medication;
@@ -23,18 +16,30 @@ public class Prescription {
 		this.medication = medication;
 	}
 
-	public Doctor getPrescriber() {
-		return prescriber;
-	}
 
-	public void setPrescriber(Doctor prescriber) {
-		this.prescriber = prescriber;
-	}
-
-	public Prescription(Patient patient, String medication, String date) {
-		this.patient = patient;
+	
+	public Prescription(String pssn, String medication, String dssn, String date) {
+		this.pssn = pssn;
 		this.medication = medication;
+		this.dssn = dssn;
 		this.date = date;
+	}
+
+	
+	public String getPssn() {
+		return pssn;
+	}
+
+	public void setPssn(String pssn) {
+		this.pssn = pssn;
+	}
+
+	public String getDssn() {
+		return dssn;
+	}
+
+	public void setDssn(String dssn) {
+		this.dssn = dssn;
 	}
 
 	public String getDate() {

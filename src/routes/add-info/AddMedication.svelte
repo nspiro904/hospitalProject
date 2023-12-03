@@ -1,3 +1,10 @@
+<script lang="ts">
+
+	async function handleSubmit(e: SubmitEvent) {
+		
+	}
+</script>
+
 <form action="">
 	<label for="mname">Name: </label>
 	<input type="text" name="mname" id="mname" />

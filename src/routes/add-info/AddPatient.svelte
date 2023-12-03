@@ -1,3 +1,10 @@
+<script lang="ts">
+
+	async function handleSubmit(e: SubmitEvent) {
+		
+	}
+</script>
+
 <div class="container">
 	<form action="addPatient">
 		<div class="row">

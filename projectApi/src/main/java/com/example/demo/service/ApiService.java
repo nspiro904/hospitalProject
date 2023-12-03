@@ -75,7 +75,7 @@ public class ApiService {
 		while( pset.next() ) {
 			String procedure = pset.getString(1);
 			String pdate = pset.getString(2);
-			plist.add(new ProcedureRecord(patient, procedure, pdate));
+			plist.add(new ProcedureRecord(patient.getSsn(), procedure, pdate));
 		}
 		procedures = plist.toArray();
 		
@@ -107,7 +107,7 @@ public class ApiService {
 		while( mset.next() ) {
 			String medication = mset.getString(1);
 			String date = mset.getString(2);
-			slist.add(new Prescription(patient, medication, date));
+			slist.add(new Prescription(patient.getSsn(), medication, "", date));
 			
 		}
 		
@@ -342,9 +342,9 @@ public class ApiService {
 
 		PreparedStatement insert = conn.prepareStatement("INSERT INTO PRESCRIPTIONS(Patient, Medication, Prescriber, PDate) VALUES(?,?,?,?)");
 
-		insert.setString(1, p.getPatient().getSsn());
+		insert.setString(1, p.getPssn());
 		insert.setString(2, p.getMedication());
-		insert.setString(3, p.getPrescriber().getSsn());
+		insert.setString(3, p.getDssn());
 		insert.setString(4, p.getDate());
 
 		success = insert.execute();
@@ -380,6 +380,66 @@ public class ApiService {
 			list.add(new Procedure(pnum, pname, "", "", 0));
 		}
 
+		return list.toArray();
+	}
+
+	public Object[] getProceduresDoctor(String did) {
+
+		String uid = "G06";
+		String password = "3iz2a6uT";
+		String url = "jdbc:oracle:thin:@cisvm-oracle.unfcsd.unf.edu:1521:orcl";
+		
+		DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+		Connection conn = DriverManager.getConnection (url, uid, password);
+
+		Statement stmt = conn.createStatement();
+
+		class doctorProcedure {
+
+			String pname;
+			String pcode;
+			
+			public doctorProcedure(String pname, String pcode) {
+				this.pname = pname;
+				this.pcode = pcode;
+			}
+
+			public String getPname() {
+				return pname;
+			}
+
+			public void setPname(String pname) {
+				this.pname = pname;
+			}
+
+			public String getPcode() {
+				return pcode;
+			}
+
+			public void setPcode(String pcode) {
+				this.pcode = pcode;
+			}
+
+			
+		}
+
+		ArrayList<doctorProcedure> list = new ArrayList<doctorProcedure>();
+
+		String query = "SELECT P.PROC_NUM, P.NAME " +
+		               "FROM PROCEDURES_UNDERTAKEN PU " +
+		               "JOIN PROCEDURE P ON PU.PROC_NUM = P.PROC_NUM " +
+		               "WHERE PU.DOCTOR = '" + did + "'";	
+		ResultSet rset = stmt.executeQuery(query);
+
+
+			while(rset.next()) {
+				String procedureName = rset.getString("PROC_NUM");
+				String procedureCode = rset.getString("NAME");
+				list.add(new doctorProcedure(procedureName, procedureCode));
+			}
+
+		conn.close();
+		
 		return list.toArray();
 	}
 		

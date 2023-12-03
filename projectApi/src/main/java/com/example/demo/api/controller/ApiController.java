@@ -163,4 +163,10 @@ public class ApiController {
 		return apiService.getProceduresCode(dcode);
 
 	}
+
+	@GetMapping("/doctor-procedures")
+	public Object[] getDoctorProcedures(@RequestParam String did) {
+
+		return apiService.getProceduresDoctor(did);
+	}
 }

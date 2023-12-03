@@ -2,40 +2,23 @@ package com.example.demo.api.model;
 
 public class ProcedureRecord {
 
-	Patient patient;
-	Procedure procedure;
+	String pssn;
+	String pnum;
 	String pdate;
-	Doctor doctor;
+	String dssn;
 	String time;
 	String description;
 	
-	public ProcedureRecord(Patient patient, Procedure procedure, String pdate, Doctor doctor, String time,
-			String description) {
-		this.patient = patient;
-		this.procedure = procedure;
+	
+	public ProcedureRecord(String pssn, String pnum, String pdate) {
+		this.pssn = pssn;
+		this.pnum = pnum;
 		this.pdate = pdate;
-		this.doctor = doctor;
-		this.time = time;
-		this.description = description;
 	}
 
 
-	public void setProcedure(Procedure procedure) {
-		this.procedure = procedure;
-	}
+	
 
-	public Procedure getProcedure(){
-		return procedure;
-	}
-
-	public Doctor getDoctor() {
-		return doctor;
-	}
-
-
-	public void setDoctor(Doctor doctor) {
-		this.doctor = doctor;
-	}
 
 
 	public String getTime() {
@@ -58,13 +41,61 @@ public class ProcedureRecord {
 	}
 
 
-	public Patient getPatient() {
-		return patient;
+	
+
+	public String getPssn() {
+		return pssn;
 	}
 
-	public void setPatient(Patient patient) {
-		this.patient = patient;
+
+
+
+
+
+	public void setPssn(String pssn) {
+		this.pssn = pssn;
 	}
+
+
+
+
+
+
+	public String getPnum() {
+		return pnum;
+	}
+
+
+
+
+
+
+	public void setPnum(String pnum) {
+		this.pnum = pnum;
+	}
+
+
+
+
+
+
+	public String getDssn() {
+		return dssn;
+	}
+
+
+
+
+
+
+	public void setDssn(String dssn) {
+		this.dssn = dssn;
+	}
+
+
+
+
+
 
 	public String getPdate() {
 		return pdate;

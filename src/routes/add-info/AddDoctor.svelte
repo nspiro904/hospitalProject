@@ -1,4 +1,9 @@
-<script lang="ts"></script>
+<script lang="ts">
+
+	async function handleSubmit(e: SubmitEvent) {
+		
+	}
+</script>
 
 <form action="">
 	<label for="ssn">Social Security Number: </label>
