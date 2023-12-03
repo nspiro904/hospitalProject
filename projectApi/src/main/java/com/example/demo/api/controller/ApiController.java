@@ -102,7 +102,7 @@ public class ApiController {
 	}
 
 	@PostMapping("/add-doctor")
-	public Boolean addDepartment(@RequestBody Doctor d) {
+	public Boolean addDoctor(@RequestBody Doctor d) {
 		Boolean success = false;
 		
 		try {

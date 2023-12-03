@@ -2,6 +2,19 @@
 
     async function handleSubmit(e: SubmitEvent) {
 
+        const prescription = {
+            pssn: document.getElementById("pssn")?.value,
+            medication: document.getElementById("mname")?.value,
+            dssn: document.getElementById("dssn")?.value,
+            date: document.getElementById("date")?.value,
+        }
+        const response = await fetch("http://localhost:8080/add-prescription", {
+			method: "POST",
+			headers: {
+				"Content/Type": "application/json"
+			},
+			body: JSON.stringify(prescription)
+		});
     }
 </script>
 

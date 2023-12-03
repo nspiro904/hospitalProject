@@ -2,6 +2,21 @@
 
 	async function handleSubmit(e: SubmitEvent) {
 		
+		const procedure = {
+			procNum: document.getElementById("pnum")?.value,
+			name: document.getElementById("pname")?.value,
+			description: document.getElementById("pdes")?.value,
+			offeredBy: document.getElementById("pdep")?.value,
+			duration: document.getElementById("")?.value,
+		}
+
+		const response = await fetch("http://localhost:8080/add-procedure", {
+			method: "POST",
+			headers: {
+				"Content/Type": "application/json"
+			},
+			body: JSON.stringify(procedure)
+		});
 	}
 </script>
 
@@ -16,7 +31,10 @@
 	<input type="text" name="pdep" id="pdep" />
 
 	<label for="pdes">Description: </label>
-	<input type="textbox" name="pdes" id="pdes" />
+	<input type="text" name="pdes" id="pdes" />
+
+	<label for="pdur">Duration: </label>
+	<input type="text" name="pdur" id="pdur" />
 
 	<button type="submit" class="btn btn-primary">submit</button>
 </form>

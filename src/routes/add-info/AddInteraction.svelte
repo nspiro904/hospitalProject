@@ -3,6 +3,22 @@
 
 	async function handleSubmit(e: SubmitEvent) {
 		
+
+		const interaction = {
+			pssn: document.getElementById("ipatient")?.value,
+			id: document.getElementById("iid")?.value,
+			date: document.getElementById("idate")?.value,
+			description: document.getElementById("ides")?.value,
+			time: document.getElementById("itime")?.value,
+		}
+		
+		const response = await fetch("http://localhost:8080/add-interaction", {
+			method: "POST",
+			headers: {
+				"Content/Type": "application/json"
+			},
+			body: JSON.stringify(interaction)
+		});
 	}
 </script>
 

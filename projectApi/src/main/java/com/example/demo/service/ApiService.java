@@ -268,7 +268,7 @@ public class ApiService {
 		
 		PreparedStatement insert = conn.prepareStatement("INSERT INTO INTERACTION_RECORD(Patient, Interaction_ID, IDate, Time) VALUES(?, ?, ?, ?)");
 
-		insert.setString(1, i.getPatient().getSsn());
+		insert.setString(1, i.getPssn());
 		insert.setString(2, i.getId());
 		insert.setString(3, i.getDate());
 		insert.setString(4, i.getTime());
@@ -316,11 +316,11 @@ public class ApiService {
 
 		PreparedStatement insert = conn.prepareStatement("INSERT INTO PROCEDURES_UNDERTAKEN(Patient, Proc_num, PDate, Time, Doctor, Description) VALUES(?, ?, ?, ?, ?, ?)");
 
-		insert.setString(1, r.getPatient().getSsn());
-		insert.setString(2, r.getProcedure().getProcNum());
+		insert.setString(1, r.getPssn());
+		insert.setString(2, r.getPnum());
 		insert.setString(3, r.getPdate());
 		insert.setString(4, r.getTime());
-		insert.setString(5, r.getDoctor().getSsn());
+		insert.setString(5, r.getDssn());
 		insert.setString(6, r.getDescription());
 
 		success = insert.execute();

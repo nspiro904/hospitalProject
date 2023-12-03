@@ -2,14 +2,14 @@ package com.example.demo.api.model;
 
 public class Interaction {
 
-	private Patient patient;
+	private String pssn;
 	private String id;
 	private String date;
 	private String description;
 	private String time;
 	
-	public Interaction(Patient p, String id, String date, String description, String time) {
-		this.patient = p;
+	public Interaction(String pssn, String id, String date, String description, String time) {
+		this.pssn = pssn;
 		this.id = id;
 		this.date = date;
 		this.description = description;
@@ -24,13 +24,7 @@ public class Interaction {
 		this.time = time;
 	}
 
-	public Patient getPatient() {
-		return patient;
-	}
-
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
+	
 
 	public String getId() {
 		return id;
@@ -54,5 +48,13 @@ public class Interaction {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getPssn() {
+		return pssn;
+	}
+
+	public void setPssn(String pssn) {
+		this.pssn = pssn;
 	}
 }

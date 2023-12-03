@@ -2,6 +2,30 @@
 
 	async function handleSubmit(e: SubmitEvent) {
 		
+		const patient = {
+			ssn: document.getElementById("ssn")?.value,
+			id: document.getElementById("pid")?.value,
+			fname: document.getElementById("fname")?.value,
+			minit: document.getElementById("minit")?.value,
+			lname: document.getElementById("lname")?.value,
+			addressCurrent: document.getElementById("caddress")?.value,
+			phoneCurrent: document.getElementById("cphone")?.value,
+			addressPermanent: document.getElementById("paddress")?.value,
+			phonePermanent: document.getElementById("pphone")?.value,
+			condition: document.getElementById("condition")?.value,
+			bdate: document.getElementById("bdate")?.value,
+			sex: document.getElementById("sex")?.value,
+			docPrimary: document.getElementById("dprime")?.value,
+			docSecondary: document.getElementById("dsec")?.value,
+		}
+
+		const response = await fetch("http://localhost:8080/add-patient", {
+			method: "POST",
+			headers: {
+				"Content/Type": "application/json"
+			},
+			body: JSON.stringify(patient)
+		});
 	}
 </script>
 
@@ -71,6 +95,8 @@
 					<label for="dsec">Secondary Doctor: </label>
 					<input type="text" name="dsec" id="dsec" />
 
+					<label for="pid">Patient ID: </label>
+					<input type="text" name="pid" id="pid" />
 					<div class="row">
 						<div class="col-6">
 							<button type="submit" class="btn btn-primary">submit</button>
