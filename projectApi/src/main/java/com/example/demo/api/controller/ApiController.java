@@ -11,8 +11,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.api.model.Department;
+import com.example.demo.api.model.Doctor;
 import com.example.demo.api.model.HealthRecord;
+import com.example.demo.api.model.Interaction;
+import com.example.demo.api.model.Medication;
 import com.example.demo.api.model.Patient;
+import com.example.demo.api.model.Prescription;
+import com.example.demo.api.model.Procedure;
+import com.example.demo.api.model.ProcedureRecord;
 import com.example.demo.service.ApiService;
 
 @CrossOrigin
@@ -42,11 +48,15 @@ public class ApiController {
 	@PostMapping("/add-patient")
 	public Boolean addPatient(@RequestBody Patient patient) {
 		
-//		try {
-//			apiService
-//		}
+		Boolean success = false;
+		try {
+			success = apiService.addPatient(patient);
+		}
+		catch( SQLException e){
+			e.printStackTrace();
+		}
 		
-		return null;
+		return success;
 	}
 	
 	@PostMapping("/add-department")
@@ -63,4 +73,94 @@ public class ApiController {
 		return success;
 	}
 	
+	@PostMapping("/add-medication")
+	public Boolean addMedication(@RequestBody Medication m) {
+		Boolean success = false;
+		
+		try {
+		success = apiService.addMedication(m);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return success;
+	}
+
+	@PostMapping("/add-interaction")
+	public Boolean addInteraction(@RequestBody Interaction interaction) {
+		Boolean success = false;
+		
+		try {
+		success = apiService.addInteraction(interaction);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return success;
+	}
+
+	@PostMapping("/add-doctor")
+	public Boolean addDepartment(@RequestBody Doctor d) {
+		Boolean success = false;
+		
+		try {
+		success = apiService.addDoctor(d);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return success;
+	}
+
+	@PostMapping("/add-procedure")
+	public Boolean addProcedure(@RequestBody Procedure p) {
+		Boolean success = false;
+		
+		try {
+		success = apiService.addProcedure(p);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return success;
+	}
+
+	@PostMapping("/record-procedure")
+	public Boolean recordProcedure(@RequestBody ProcedureRecord r) {
+		
+		Boolean success = false;
+
+		try {
+			success = apiService.recordProcedure(r);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return success;
+	}
+
+	@PostMapping("/add-prescription")
+	public Boolean addPrescription(@RequestBody Prescription p) {
+		
+		Boolean success = false;
+
+		try {
+			success = apiService.addPrescription(p);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return success;
+	}
+
+	@GetMapping("/get-procedures-code")
+	public Object[] getProcedures(@RequestParam String dcode ){
+
+		return apiService.getProceduresCode(dcode);
+
+	}
 }

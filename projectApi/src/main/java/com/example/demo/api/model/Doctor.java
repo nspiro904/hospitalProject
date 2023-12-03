@@ -68,11 +68,11 @@ public class Doctor {
 		this.phoneContact = phoneContact;
 	}
 
-	public Date getBdate() {
+	public String getBdate() {
 		return bdate;
 	}
 
-	public void setBdate(Date bdate) {
+	public void setBdate(String bdate) {
 		this.bdate = bdate;
 	}
 
@@ -92,7 +92,7 @@ public class Doctor {
 	private String address;
 	private String phone;
 	private String phoneContact;
-	private Date bdate;
+	private String bdate;
 	private String department;
 	
 	public Doctor(String ssn, String did, String fname, String lname, String department) {

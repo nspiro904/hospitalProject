@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.api.model.Department;
+import com.example.demo.api.model.Doctor;
 import com.example.demo.api.model.HealthRecord;
 import com.example.demo.api.model.Interaction;
+import com.example.demo.api.model.Medication;
 import com.example.demo.api.model.Patient;
 import com.example.demo.api.model.Prescription;
 import com.example.demo.api.model.Procedure;
@@ -15,7 +17,7 @@ import com.example.demo.api.model.ProcedureRecord;
 
 @Service
 public class ApiService {
-
+ 
 	
 	
 	public HealthRecord getHealthRecord(String id) throws SQLException {
@@ -79,7 +81,7 @@ public class ApiService {
 		
 		ArrayList<Interaction> ilist = new ArrayList<Interaction>();
 		
-		String qInteractions = "SELECT IDate, Description, Interaction_ID "
+		String qInteractions = "SELECT IDate, Description, Interaction_ID, Time "
 				+ "FROM interaction_record "
 				+ "WHERE Patient = '" + pssn + "'";
 		Statement stmtI = conn.createStatement();
@@ -89,8 +91,9 @@ public class ApiService {
 			String date = iset.getString(1);
 			String description = iset.getString(2);
 			String iid = iset.getString(3);
+			String time = iset.getString(4);
 			
-			ilist.add(new Interaction(patient, iid, date, description ));
+			ilist.add(new Interaction(patient, iid, date, description, time ));
 		}
 		interactions = ilist.toArray();
 		
@@ -112,11 +115,13 @@ public class ApiService {
 		record = new HealthRecord( patient, prescriptions, interactions, procedures);
 		}
 		
+		conn.close();
 		return record;
 	}
 	
-	public void addPatient(Patient p) throws SQLException {
+	public Boolean addPatient(Patient p) throws SQLException {
 		
+		Boolean success;
 		 String uid = "G06";
 			
 		    //System.out.print("password: ");
@@ -136,18 +141,39 @@ public class ApiService {
 		    // Create a Statement
 		
 		    Statement stmt = conn.createStatement();
-		    
-		    
-		String insert = "INSERT INTO PATIENT(Ssn, Patient_id, First_name, Middle_init, Last_name, Curr_address, Curr_phone, Perm_address, Perm_phone, Condition, Birth_date, Sex, Primary_doc, Secondary_doc) VALUES(";
+
+			String prepared = "INSERT INTO PATIENT(Ssn, Patient_id, First_name, Middle_init, Last_name, Curr_address, Curr_phone, Perm_address, Perm_phone, Condition, Birth_date, Sex, Primary_doc, Secondary_doc)" +
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+		PreparedStatement insert = conn.prepareStatement( prepared);
+
+		insert.setString(1, p.getSsn());
+		insert.setString(2, p.getId());
+		insert.setString(3, p.getFname());
+		insert.setString(4, Character.toString(p.getMinit()));
+		insert.setString(5, p.getLname());
+		insert.setString(6, p.getAddressCurrent());
+		insert.setString(7, p.getPhoneCurrent());
+		insert.setString(8, p.getAddressPermanent());
+		insert.setString(9, p.getPhonePermanent());
+		insert.setString(10, p.getCondition());
+		insert.setString(11, p.getBdate());
+		insert.setString(12, p.getSex());
+		insert.setString(13, p.getDocPrimary());
+		insert.setString(14, p.getDocSecondary());
 		
 		
 		
-		stmt.executeQuery(insert);
+		
+		success = insert.execute();
+		conn.close();	
+		return success;
 		
 	}
 	
 	public Boolean addDepartment(Department d) throws SQLException {
 		
+		Boolean success;
 		String uid = "G06";
 		String password = "3iz2a6uT";
 		String url = "jdbc:oracle:thin:@cisvm-oracle.unfcsd.unf.edu:1521:orcl";
@@ -166,7 +192,196 @@ public class ApiService {
 		insert.setString(4, d.getOfficePhone());
 		insert.setString(5, d.getOfficeHead());
 		
-		return insert.execute();
+		success = insert.execute();
+		conn.close();	
+		return success;
+		
 	}
+
+	public Boolean addDoctor(Doctor d) throws SQLException {
+
+		Boolean success;
+		String uid = "G06";
+		String password = "3iz2a6uT";
+		String url = "jdbc:oracle:thin:@cisvm-oracle.unfcsd.unf.edu:1521:orcl";
+		
+		DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+		 
+				Connection conn = DriverManager.getConnection (url, uid, password);
+
+		PreparedStatement insert = conn.prepareStatement("INSERT INTO DOCTOR(Ssn, Doctor_id, First_name, Middle_init, Last_name, Address, Phone_num, Contact_num, Birth_date, Works_in) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		
+		insert.setString(1, d.getSsn());
+		insert.setString(2, d.getDid());
+		insert.setString(3, d.getFname());
+		insert.setString(4, Character.toString(d.getMinit()));
+		insert.setString(5, d.getLname());
+		insert.setString(6, d.getAddress());
+		insert.setString(7, d.getPhone());
+		insert.setString(8, d.getPhoneContact());
+		insert.setString(9, d.getBdate());
+		insert.setString(10, d.getDepartment());
+
+		success = insert.execute();
+		conn.close();	
+		return success;
+		
+	}
+
+
+	public Boolean addProcedure(Procedure p) throws SQLException {
+
+		Boolean success;
+		String uid = "G06";
+		String password = "3iz2a6uT";
+		String url = "jdbc:oracle:thin:@cisvm-oracle.unfcsd.unf.edu:1521:orcl";
+		
+		DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+		 
+						Connection conn = DriverManager.getConnection (url, uid, password);
+
+		PreparedStatement insert = conn.prepareStatement("INSERT INTO PROCEDURE(Proc_num, Name, Description, Offered_by, Duration) VALUES(?, ?, ?, ?, ?)");
+
+		insert.setString(1, p.getProcNum());
+		insert.setString(2, p.getName());
+		insert.setString(3, p.getDescription());
+		insert.setString(4, p.getOfferedBy());
+		insert.setInt(5, p.getDuration());
+		
+		success = insert.execute();
+		conn.close();	
+		return success;
+		
+		
+	}
+
+	public Boolean addInteraction(Interaction i) throws SQLException {
+
+		Boolean success;
+		String uid = "G06";
+		String password = "3iz2a6uT";
+		String url = "jdbc:oracle:thin:@cisvm-oracle.unfcsd.unf.edu:1521:orcl";
+		
+		DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+						Connection conn = DriverManager.getConnection (url, uid, password);
+
+		
+		PreparedStatement insert = conn.prepareStatement("INSERT INTO INTERACTION_RECORD(Patient, Interaction_ID, IDate, Time) VALUES(?, ?, ?, ?)");
+
+		insert.setString(1, i.getPatient().getSsn());
+		insert.setString(2, i.getId());
+		insert.setString(3, i.getDate());
+		insert.setString(4, i.getTime());
+		
+		success = insert.execute();
+		conn.close();	
+		return success;
+		
+		}
+
+		
+	public Boolean addMedication(Medication m) throws SQLException {
+
+		Boolean success;
+		String uid = "G06";
+		String password = "3iz2a6uT";
+		String url = "jdbc:oracle:thin:@cisvm-oracle.unfcsd.unf.edu:1521:orcl";
+		
+		DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+		 				Connection conn = DriverManager.getConnection (url, uid, password);
+
+
+			PreparedStatement insert = conn.prepareStatement("INSERT INTO MEDICATION(Name, Manufacturer, Description) VALUES(?, ?, ?)");
+
+			insert.setString(1, m.getName());
+			insert.setString(2, m.getManufacturer());
+			insert.setString(3, m.getDescription());
+			
+			success = insert.execute();
+		conn.close();	
+		return success;
+		
+			}
+
+
+	public Boolean recordProcedure(ProcedureRecord r) {
+
+		Boolean success;
+		String uid = "G06";
+		String password = "3iz2a6uT";
+		String url = "jdbc:oracle:thin:@cisvm-oracle.unfcsd.unf.edu:1521:orcl";
+		
+		DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+		Connection conn = DriverManager.getConnection (url, uid, password);
+
+		PreparedStatement insert = conn.prepareStatement("INSERT INTO PROCEDURES_UNDERTAKEN(Patient, Proc_num, PDate, Time, Doctor, Description) VALUES(?, ?, ?, ?, ?, ?)");
+
+		insert.setString(1, r.getPatient().getSsn());
+		insert.setString(2, r.getProcedure().getProcNum());
+		insert.setString(3, r.getPdate());
+		insert.setString(4, r.getTime());
+		insert.setString(5, r.getDoctor().getSsn());
+		insert.setString(6, r.getDescription());
+
+		success = insert.execute();
+		conn.close();	
+		return success;
+		
+
+	}
+
+	public Boolean addPrescription(Prescription p) {
+
+		Boolean success;
+		String uid = "G06";
+		String password = "3iz2a6uT";
+		String url = "jdbc:oracle:thin:@cisvm-oracle.unfcsd.unf.edu:1521:orcl";
+		
+		DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+		Connection conn = DriverManager.getConnection (url, uid, password);
+
+		PreparedStatement insert = conn.prepareStatement("INSERT INTO PRESCRIPTIONS(Patient, Medication, Prescriber, PDate) VALUES(?,?,?,?)");
+
+		insert.setString(1, p.getPatient().getSsn());
+		insert.setString(2, p.getMedication());
+		insert.setString(3, p.getPrescriber().getSsn());
+		insert.setString(4, p.getDate());
+
+		success = insert.execute();
+		conn.close();	
+		return success;
+		
+		
+	}
+
+	public Object[] getProceduresCode(String dcode) {
+
+		ArrayList<Procedure> list = new ArrayList<Procedure>();
+
+		String uid = "G06";
+		String password = "3iz2a6uT";
+		String url = "jdbc:oracle:thin:@cisvm-oracle.unfcsd.unf.edu:1521:orcl";
+		
+		DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+		Connection conn = DriverManager.getConnection (url, uid, password);
+
+		Statement stmt = conn.createStatement();
+
+		String query = "SELECT P.PROC_NUM as procnum, P.NAME as pname " +
+					"FROM PROCEDURE P " +
+					"JOIN DEPARTMENT D ON P.OFFERED_BY = D.CODE " +
+					"WHERE D.CODE = '" + dcode + "'";
+
+		ResultSet rset = stmt.executeQuery(query);
+
+		while(rset.next()) {
+			String pnum = rset.getString("procnum");
+			String pname = rset.getString("pname");
+			list.add(new Procedure(pnum, pname, "", "", 0));
+		}
+
+		return list.toArray();
+	}
+		
 
 }

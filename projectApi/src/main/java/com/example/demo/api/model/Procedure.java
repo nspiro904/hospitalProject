@@ -6,13 +6,15 @@ public class Procedure {
 	String name;
 	String description;
 	String offeredBy;
+	int duration;
 	
-	public Procedure(String procNum, String name, String description, String offeredBy) {
+	public Procedure(String procNum, String name, String description, String offeredBy, int duration) {
 		super();
 		this.procNum = procNum;
 		this.name = name;
 		this.description = description;
 		this.offeredBy = offeredBy;
+		this.duration = duration;
 	}
 
 	public String getProcNum() {
@@ -45,6 +47,14 @@ public class Procedure {
 
 	public void setOfferedBy(String offeredBy) {
 		this.offeredBy = offeredBy;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
 	}
 	
 	

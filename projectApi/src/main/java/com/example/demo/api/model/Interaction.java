@@ -6,12 +6,22 @@ public class Interaction {
 	private String id;
 	private String date;
 	private String description;
+	private String time;
 	
-	public Interaction(Patient p, String id, String date, String description) {
+	public Interaction(Patient p, String id, String date, String description, String time) {
 		this.patient = p;
 		this.id = id;
 		this.date = date;
 		this.description = description;
+		this.time = time;
+	}
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
 	}
 
 	public Patient getPatient() {
