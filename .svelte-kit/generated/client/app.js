@@ -16,11 +16,11 @@ export const server_loads = [];
 
 export const dictionary = {
 		"/": [2],
-		"/add-info": [3],
+		"/add-info": [~3],
 		"/add-prescription": [4],
 		"/doctor-procedures": [5],
 		"/find-procedure": [6],
-		"/health-record": [7],
+		"/health-record": [~7],
 		"/record-procedure": [8]
 	};
 

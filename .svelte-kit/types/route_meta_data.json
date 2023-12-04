@@ -1,9 +1,13 @@
 {
 	"/": [],
-	"/add-info": [],
+	"/add-info": [
+		"src/routes/add-info/+page.server.ts"
+	],
 	"/add-prescription": [],
 	"/doctor-procedures": [],
 	"/find-procedure": [],
-	"/health-record": [],
+	"/health-record": [
+		"src/routes/health-record/+page.server.ts"
+	],
 	"/record-procedure": []
 }
