@@ -24,6 +24,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"localtunnel": "^2.0.2",
 		"sass": "^1.69.5"
 	}
 }

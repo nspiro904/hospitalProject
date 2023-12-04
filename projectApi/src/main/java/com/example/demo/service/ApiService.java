@@ -59,7 +59,7 @@ public class ApiService {
 		String pssn = rset.getString("pssn");
 		
 		patient = new Patient(pssn, id, fname, lname);
-		patient.setMinit(minit.charAt(0));
+		if(minit != null) patient.setMinit(minit.charAt(0));
 		patient.setAddressCurrent(address);
 		patient.setPhoneCurrent(phone);
 		patient.setDocPrimary(primary);
@@ -93,13 +93,13 @@ public class ApiService {
 			String iid = iset.getString(3);
 			String time = iset.getString(4);
 			
-			ilist.add(new Interaction(patient, iid, date, description, time ));
+			ilist.add(new Interaction(pssn, iid, date, description, time ));
 		}
 		interactions = ilist.toArray();
 		
 		ArrayList<Prescription> slist = new ArrayList<Prescription>();
 		
-		String qPrescriptions = "SELECT medication, PDate "
+		String qPrescriptions = "SELECT medication, PDate, Prescriber "
 				+ "FROM prescriptions "
 				+ "WHERE Patient = '" + pssn + "'";
 		Statement stmtM = conn.createStatement();
@@ -107,7 +107,8 @@ public class ApiService {
 		while( mset.next() ) {
 			String medication = mset.getString(1);
 			String date = mset.getString(2);
-			slist.add(new Prescription(patient.getSsn(), medication, "", date));
+			String dssn = mset.getString(3);
+			slist.add(new Prescription(patient.getSsn(), medication, dssn, date));
 			
 		}
 		
@@ -304,7 +305,7 @@ public class ApiService {
 			}
 
 
-	public Boolean recordProcedure(ProcedureRecord r) {
+	public Boolean recordProcedure(ProcedureRecord r) throws SQLException {
 
 		Boolean success;
 		String uid = "G06";
@@ -330,7 +331,7 @@ public class ApiService {
 
 	}
 
-	public Boolean addPrescription(Prescription p) {
+	public Boolean addPrescription(Prescription p) throws SQLException {
 
 		Boolean success;
 		String uid = "G06";
@@ -354,7 +355,7 @@ public class ApiService {
 		
 	}
 
-	public Object[] getProceduresCode(String dcode) {
+	public Object[] getProceduresCode(String dcode) throws SQLException {
 
 		ArrayList<Procedure> list = new ArrayList<Procedure>();
 
@@ -379,11 +380,11 @@ public class ApiService {
 			String pname = rset.getString("pname");
 			list.add(new Procedure(pnum, pname, "", "", 0));
 		}
-
+		conn.close();
 		return list.toArray();
 	}
 
-	public Object[] getProceduresDoctor(String did) {
+	public Object[] getProceduresDoctor(String did) throws SQLException {
 
 		String uid = "G06";
 		String password = "3iz2a6uT";
@@ -425,10 +426,11 @@ public class ApiService {
 
 		ArrayList<doctorProcedure> list = new ArrayList<doctorProcedure>();
 
+
 		String query = "SELECT P.PROC_NUM, P.NAME " +
 		               "FROM PROCEDURES_UNDERTAKEN PU " +
 		               "JOIN PROCEDURE P ON PU.PROC_NUM = P.PROC_NUM " +
-		               "WHERE PU.DOCTOR = '" + did + "'";	
+									 "INNER JOIN DOCTOR D ON D.Doctor_ID = '" + did + "' AND D.SSN = PU.Doctor ";	
 		ResultSet rset = stmt.executeQuery(query);
 
 

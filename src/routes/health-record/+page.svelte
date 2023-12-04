@@ -1,5 +1,6 @@
 <script lang="ts">
 	let record;
+
 	async function handleSubmit() {
 		const pid = document.getElementById('pid')?.value;
 		const response = await fetch(`http://localhost:8080/patient-record?id=${pid}`, {
@@ -42,7 +43,7 @@
 
 		{#each record.procedures as proc}
 			<tr>
-				<td>{proc.procedure}</td>
+				<td>{proc.pnum}</td>
 				<td>{proc.pdate}</td>
 			</tr>
 		{/each}
@@ -66,14 +67,14 @@
 		<tr>
 			<th>Medication</th>
 			<th>Date</th>
-			<th>Prescriber</th>
+			<th>Prescriber SSN</th>
 		</tr>
 
 		{#each record.scripts as s}
 			<tr>
 				<td>{s.medication}</td>
 				<td>{s.date}</td>
-				<td>{s.prescriber}</td>
+				<td>{s.dssn}</td>
 			</tr>
 		{/each}
 	</table>

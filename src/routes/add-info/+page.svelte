@@ -38,30 +38,28 @@
 	<AddProcedure />
 </Dialog>
 
-<div class="row d-flex margins">
-	<div class="col-md-12 text-center">
-		<div class="btn-group-vertical align-self-center" role="group">
-			<button
-				on:click={() => dialogPatient.showModal()}
-				type="button"
-				class="btn btn-primary btn-large">Add Patient</button
-			>
-			<button on:click={() => dialogDoctor.showModal()} type="button" class="btn btn-primary"
-				>Add Doctor</button
-			>
-			<button on:click={() => dialogDepartment.showModal()} type="button" class="btn btn-primary"
-				>Add Department</button
-			>
-			<button on:click={() => dialogProcedure.showModal()} type="button" class="btn btn-primary"
-				>Add Procedure</button
-			>
-			<button on:click={() => dialogMedication.showModal()} type="button" class="btn btn-primary"
-				>Add Medication</button
-			>
-			<button on:click={() => dialogInteraction.showModal()} type="button" class="btn btn-primary"
-				>Add Interaction Record</button
-			>
-		</div>
+<div class="container-sm">
+	<div class="btn-group-vertical align-self-center" role="group">
+		<button
+			on:click={() => dialogPatient.showModal()}
+			type="button"
+			class="btn btn-primary btn-large">Add Patient</button
+		>
+		<button on:click={() => dialogDoctor.showModal()} type="button" class="btn btn-primary"
+			>Add Doctor</button
+		>
+		<button on:click={() => dialogDepartment.showModal()} type="button" class="btn btn-primary"
+			>Add Department</button
+		>
+		<button on:click={() => dialogProcedure.showModal()} type="button" class="btn btn-primary"
+			>Add Procedure</button
+		>
+		<button on:click={() => dialogMedication.showModal()} type="button" class="btn btn-primary"
+			>Add Medication</button
+		>
+		<button on:click={() => dialogInteraction.showModal()} type="button" class="btn btn-primary"
+			>Add Interaction Record</button
+		>
 	</div>
 </div>
 

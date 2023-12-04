@@ -160,13 +160,27 @@ public class ApiController {
 	@GetMapping("/get-procedures-code")
 	public Object[] getProcedures(@RequestParam String dcode ){
 
-		return apiService.getProceduresCode(dcode);
+		Object[] procedures = null;
+		try {
+			procedures = apiService.getProceduresCode(dcode);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return procedures;
 
 	}
 
 	@GetMapping("/doctor-procedures")
 	public Object[] getDoctorProcedures(@RequestParam String did) {
 
-		return apiService.getProceduresDoctor(did);
+		Object[] procedures = null;
+		try {
+			procedures = apiService.getProceduresDoctor(did);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return procedures;
 	}
 }

@@ -1,0 +1,36 @@
+body {
+	background-color: hsl(0, 0%, 25%);
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+label,
+th,
+td {
+	color: hsl(0, 0%, 95%);
+}
+
+table {
+	margin: 2em;
+	box-shadow: 0 1px 2px #111;
+}
+
+th {
+	background-color: hsl(0, 0%, 30%);
+}
+
+td,
+th {
+	padding: 1em;
+	box-shadow: 0px 1px 1px #eee;
+}
+
+dialog,
+dialog label,
+dialog p,
+dialog input {
+	color: black;
+}
